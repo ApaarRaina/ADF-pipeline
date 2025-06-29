@@ -1,0 +1,6 @@
+{
+	"name": "data-from-local-mysql",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

@@ -1,0 +1,90 @@
+{
+	"name": "active_subs",
+	"properties": {
+		"activities": [
+			{
+				"name": "get_active",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "check_if_table_exists",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select* from [dbo].[`customers`] where subscription_status='Active';",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DestinationDataset_uid",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "active_customer",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "check_if_table_exists",
+				"type": "Script",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 3,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"typeProperties": {
+					"scripts": [
+						{
+							"type": "Query",
+							"text": "IF NOT EXISTS (\n    SELECT * FROM INFORMATION_SCHEMA.TABLES\n    WHERE TABLE_SCHEMA = 'dbo' AND TABLE_NAME = 'active_customers'\n)\nBEGIN\n    SELECT TOP 0 * INTO [dbo].[active_customers] FROM [dbo].[`customers`];\nEND"
+						}
+					],
+					"scriptBlockExecutionTimeout": "02:00:00"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2025-06-29T14:20:18Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

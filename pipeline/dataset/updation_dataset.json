@@ -1,0 +1,17 @@
+{
+	"name": "updation_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "updated"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

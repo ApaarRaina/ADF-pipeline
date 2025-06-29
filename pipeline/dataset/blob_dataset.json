@@ -1,0 +1,25 @@
+{
+	"name": "blob_dataset",
+	"properties": {
+		"description": "the SFTP files are dumped here\n",
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "pub",
+				"folderPath": "root",
+				"container": "sftp-transfer-data"
+			},
+			"compression": {
+				"type": "ZipDeflate",
+				"level": "Fastest"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

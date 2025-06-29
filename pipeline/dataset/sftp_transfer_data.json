@@ -1,0 +1,19 @@
+{
+	"name": "sftp_transfer_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Sftp1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "SftpLocation",
+				"fileName": "pub",
+				"folderPath": "/root"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
